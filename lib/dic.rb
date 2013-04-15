@@ -9,6 +9,10 @@ class Dic
     @stack = []
   end
 
+  def respond_to_missing?(name,include_private)
+    self[name] or super
+  end
+
   def method_missing(name, *args, &proc)
     # setter
     if args.size == 1 || !proc.nil?
@@ -16,9 +20,11 @@ class Dic
       self[name]= args.first || proc
     # getter
     elsif args.empty? && proc.nil?
-      self[name] or raise DicError, "#{self.class}: undefined entry #{name}"
+      self[name] or super 
+      # raise DicError, "#{self.class}: undefined entry #{name}"
     else
-      raise ArgumentError, "invalid argument #{name}, #{args.inspect}"
+      super
+      #raise ArgumentError, "invalid argument #{name}, #{args.inspect}"
     end
   end
 
