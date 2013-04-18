@@ -88,6 +88,6 @@ class Dic
   protected
   def debug(msg=nil)
     msg = msg || yield
-    puts "#{self}: #{msg}" if $DEBUG 
+    puts "#{Time.now} #{self}: #{msg}" if $DEBUG 
   end
 end
